@@ -1,90 +1,95 @@
-const precioArticulo1 = 100;
-const precioArticulo2 = 200;
-const precioArticulo3 = 300;
-const precioArticulo4 = 400;
-const precioArticulo5 = 500;
+//inventario
+inventario = [
+    { fruta: 'banana', precio: 150, stock: 100 },
+    { fruta: 'durazno', precio: 300, stock: 100 },
+    { fruta: 'frutilla', precio: 600, stock: 100 },
+    { fruta: 'mandarina', precio: 280, stock: 100 },
+    { fruta: 'manzana', precio: 320, stock: 100 },
+    { fruta: 'naranja', precio: 200, stock: 100 },
+    { fruta: 'pera', precio: 300, stock: 100 },
+    { fruta: 'pomelo', precio: 500, stock: 100 },
+    { fruta: 'melon', precio: 200, stock: 100 },
+    { fruta: 'sandia', precio: 100, stock: 100 }
+];
 
-let gastoTotal = 0;
+//carrito de compras
+const carrito = [];
 
-const iniciar = prompt('Desea comenzar a comprar. s/n');
-
-function menuArticulos() {
-    return 'Lista de articulos\n1 Articulo 1\n2 Articulo 2\n3 Articulo 3\n4 Articulo 4\n5 Articulo 5\nx Terminar compra';
-};
-
-function menuCuotas() {
-    return '1 Tres cuotas\n2 Seis cuotas\n3 Doce cuotas\n4 Cancelar compra';
+//funcion constructora carrito
+function Fruta(fruta, precio) {
+    this.fruta = fruta;
+    this.precio = precio;
 }
 
-if (iniciar == 's') {
-    let opcion = prompt('Lista de articulos\n1 Articulo 1\n2 Articulo 2\n3 Articulo 3\n4 Articulo 4\n5 Articulo 5\nx Terminar compra');
-    while (opcion.toLowerCase() !== 'x') {
-        switch (opcion) {
-            case '1':
-                gastoTotal = gastoTotal + precioArticulo1;
-                break;
-            case '2':
-                gastoTotal = gastoTotal + precioArticulo2;
-                break;
-            case '3':
-                gastoTotal = gastoTotal + precioArticulo3;
-                break;
-            case '4':
-                gastoTotal = gastoTotal + precioArticulo4;
-                break;
-            case '5':
-                gastoTotal = gastoTotal + precioArticulo5;
-                break;
-            default:
-                alert('Opcion incorrecta');
-                break;
-        }
-        opcion = prompt('Lista de articulos\n1 Articulo 1\n2 Articulo 2\n3 Articulo 3\n4 Articulo 4\n5 Articulo 5\nx Terminar compra');
-    }
-    if (gastoTotal > 0) {
+//buscar una fruta en el inventario
+function buscarFruta(arr, filtro) {
+    const encontrada = arr.find((f) => {
+        return f.fruta === filtro;
+    })
+    return encontrada;
+}
 
-        const formaPago = prompt('El total de su compra fue de: ' + gastoTotal + '$' + '\nComo lo desea abonar?\n1 Efectivo \n2 Tarjeta de crédito \n3 Cancelar compra');
+//agregar fruta al carrito
+function cargarFruta(arr, valor) {
+    arr.push(valor);
+}
 
-        switch (formaPago) {
-            case '1':
-                alert('El total abonado es de ' + gastoTotal + '$\nGracias por confiar en nsosotros...');
-                break;
-            case '2':
-                const cantidadCuotas = prompt('1 Tres cuotas\n2 Seis cuotas\n3 Doce cuotas\n4 Cancelar compra');
-                while (cantidadCuotas !== '4') {
-                    switch (cantidadCuotas) {
-                        case '1':
-                            gastoTotal = gastoTotal / 3;
-                            alert('El total abonado es de 3 cuotas de ' + gastoTotal.toFixed(2) + '$\nGracias por confiar en nosotros');
-                            cantidadCuotas = 4;
-                            break;
-                        case '2':
-                            gastoTotal = gastoTotal / 6;
-                            alert('El total abonado es de 6 cuotas de ' + gastoTotal.toFixed(2) + '$\nGracias por confiar en nosotros');
-                            cantidadCuotas = 4;
-                            break;
-                        case '3':
-                            gastoTotal = gastoTotal / 12;
-                            alert('El total abonado es de 12 cuotas de ' + gastoTotal.toFixed(2) + '$\nGracias por confiar en nosotros');
-                            cantidadCuotas = 4;
-                            break;
-                        case '4':
-                            alert('Gracias por su visita, lo esperamos en otro momento');
-                            break;
-                        default:
-                            alert('Opcion incorrecta');
-                            break;
-                    }
-                }
-                break;
-            case '3':
-                alert('Gracias por su visita, lo esperamos en otro momento');
-                break;
-            default:
-                alert('Opcion incorrecta');
-                break;
-        }
-    }
+//sumar total de la compra
+function sumarCompra(arr) {
+    const total = arr.reduce((acc, f) => {
+        return acc + parseFloat(f.precio);
+    }, 0);
+    return total;
+}
+
+//iniciar la compra
+const fruta = prompt('¿Qué fruta desea comprar?');
+const cantidad = prompt('¿Qué cantidad desea comprar comprar?');
+
+const frutaEncontrada = buscarFruta(fruta);
+
+if (frutaEncontrada) {
+    const nuevafruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
+    cargarFruta(carrito, nuevafruta);
 } else {
-    alert('Gracias por su visita, lo esperamos en otro momento');
-};
+    alert('No contamos con ese tipo de fruta');
+}
+
+//continuar con la compra
+while (confirm('¿Desea agregar otra fruta al carrito?')) {
+    let fruta = prompt('¿qué fruta desea comprar?');
+    let cantidad = prompt('¿Qué cantidad desea comprar comprar?');
+    let frutaEncontrada = buscarFruta(fruta);
+    if (frutaEncontrada) {
+        const nuevaFruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
+        cargarFruta(carrito, nuevaFruta);
+    } else {
+        alert('No contamos con ese tipo de fruta');
+    }
+}
+
+//fin de la compra
+let total = sumarCompra(carrito);
+
+//resumen de lo comprado
+let resultado = 'Detalle de la compra realizada\n';
+
+carrito.forEach((fruta) => {
+    resultado += `${fruta.fruta} ${fruta.precio}$\n`;
+});
+
+resultado += `\nTotal por la compra ${total}$`;
+alert(resultado);
+
+
+
+
+
+
+
+
+
+
+
+
+
