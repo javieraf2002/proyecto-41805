@@ -46,7 +46,7 @@ function sumarCompra(arr) {
 const fruta = prompt('¿Qué fruta desea comprar?');
 const cantidad = prompt('¿Qué cantidad desea comprar comprar?');
 
-const frutaEncontrada = buscarFruta(fruta);
+const frutaEncontrada = buscarFruta(inventario, fruta);
 
 if (frutaEncontrada) {
     const nuevafruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
@@ -59,7 +59,7 @@ if (frutaEncontrada) {
 while (confirm('¿Desea agregar otra fruta al carrito?')) {
     let fruta = prompt('¿qué fruta desea comprar?');
     let cantidad = prompt('¿Qué cantidad desea comprar comprar?');
-    let frutaEncontrada = buscarFruta(fruta);
+    let frutaEncontrada = buscarFruta(inventario, fruta);
     if (frutaEncontrada) {
         const nuevaFruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
         cargarFruta(carrito, nuevaFruta);
