@@ -15,6 +15,8 @@ inventario = [
 //carrito de compras
 const carrito = [];
 
+console.log(carrito.length);
+
 //funcion constructora carrito
 function Fruta(fruta, precio) {
     this.fruta = fruta;
@@ -114,6 +116,7 @@ const cantidad = prompt('¿Qué cantidad desea comprar comprar?');
 
 const frutaEncontrada = buscarFruta(inventario, fruta);
 
+//Primer ingrfeso al carrito
 if (frutaEncontrada) {
     if (hayCantidadInventario(inventario, fruta, cantidad)) {
         const nuevafruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
