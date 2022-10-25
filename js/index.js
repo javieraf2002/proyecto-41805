@@ -13,9 +13,13 @@ inventario = [
 ];
 
 //carrito de compras
-const carrito = [];
+let carrito = [];
 
-console.log(carrito.length);
+const btnAgregar = document.querySelector("#btnAgregar");
+const btnFinalizar = document.querySelector("#btnFinalizar");
+const inputProducto=document.querySelector('#lproducto');
+const inputCantidad= document.querySelector('#lCantidad');
+const formulario = document.querySelector('form')
 
 //funcion constructora carrito
 function Fruta(fruta, precio) {
@@ -24,24 +28,24 @@ function Fruta(fruta, precio) {
 }
 
 //buscar una fruta en el inventario
-function buscarFruta(arr, filtro) {
-    const encontrada = arr.find((f) => {
+function buscarFruta(filtro) {
+    const encontrada = inventario.find((f) => {
         return f.fruta === filtro;
     })
     return encontrada;
 }
 
 //restar fruta del inventario
-function restarInventario(arr, filtro, cantidad) {
-    let encontrada = arr.find((f) => {
+function restarInventario(filtro, cantidad) {
+    let encontrada = inventario.find((f) => {
         return f.fruta === filtro;
     })
     if (encontrada) encontrada.stock -= cantidad;
 }
 
-//varificar inventariode frutas
-function hayCantidadInventario(arr, filtro, cantidad) {
-    const encontrada = arr.find((f) => {
+//verificar inventariode frutas
+function hayCantidadInventario(filtro, cantidad) {
+    const encontrada = inventario.find((f) => {
         return f.fruta === filtro;
     })
     if (encontrada) {
@@ -51,52 +55,62 @@ function hayCantidadInventario(arr, filtro, cantidad) {
     }
 }
 
-//agregar primera fruta al carrito
-function cargarFrutaNueva(arr, valor) {
-    arr.push(valor);
-}
-
-//continuar agregando frutas al cariito
-function cargarFruta(arr, filtro, cantidad) {
-    const encontrada = arr.find((f) => {
+//agregar frutas al carrito
+function agregarFrutaCarrito(filtro, cantidad, precio) {
+    const encontrada = carrito.find((f) => {
         return f.fruta === filtro;
     })
     if (encontrada) {
         //Fruta ya existente en el carrito
-        encontrada.precio += cantidad;
+        encontrada.precio += cantidad * precio;
+        guardarLS(encontrada);
     } else {
         //Nueva Fruta al carrito
-        const nuevaFruta = new Fruta(filtro, cantidad);
-        arr.push(nuevaFruta);
+        const nuevaFruta = new Fruta(filtro, cantidad * precio);
+        carrito.push(nuevaFruta);
+        guardarLS(nuevaFruta);
     }
 }
 
 //sumar total de la compra
-function sumarCompra(arr) {
-    const total = arr.reduce((acc, f) => {
+function sumarCompra() {
+    const total = carrito.reduce((acc, f) => {
         return acc + parseFloat(f.precio);
     }, 0);
     return total;
 }
 
 //resumen del inventario
-function resumenInventario(arr) {
+function resumenInventario() {
     let resumen = 'Detalle del inventario \n';
-    arr.forEach((fruta) => {
+    inventario.forEach((fruta) => {
         resumen += `${fruta.fruta} ${fruta.stock}\n`;
     });
     console.clear()
     console.log(resumen);
 }
 
+//resumen parcial del carrito
+function resumenParcialCarrito(){
+    let resumen = 'Detalle parcial del carrito de compras \n';
+    carrito.forEach((fruta) => {
+        resumen += `${fruta.fruta} ${fruta.precio}\n`;
+    });
+    console.log(resumen);
+}
+
 //resumen del carrito
-function resumenCarrito(){
+function resumenCarrito() {
     //fin de la compra
     let total = sumarCompra(carrito);
-    
-    if(total == 0){
-        alert('¡¡ Carrito vacio !!');
-    }else{
+
+    if (total == 0) {
+        Swal.fire(
+            'Fin de la compra',
+            'Carrito vacio',
+            'error'
+          )
+    } else {
         //resumen de lo comprado
         let resultado = 'Detalle de la compra realizada\n';
         carrito.forEach((fruta) => {
@@ -107,48 +121,76 @@ function resumenCarrito(){
     }
 }
 
+const guardarLS = (fruta) => {
+    let transactionArray = JSON.parse(localStorage.getItem("carrito")) || [];
+    
+    const encontrada = transactionArray.find((f) => {
+        return f.fruta === fruta.fruta;
+    })
+    if (encontrada) {
+        //Fruta ya existente en el carrito
+        encontrada.precio = fruta.precio;
+    } else {
+        //Nueva Fruta al carrito
+        transactionArray.push(fruta);
+    }    
+
+    let returnTransactionArray = JSON.stringify(transactionArray);
+    localStorage.setItem("carrito", returnTransactionArray);
+    console.log('Guardado LS')
+};
+
+function leerLS(arr){
+    let transactionObjArr = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    transactionObjArr.forEach((fruta) => {
+        arr.push(fruta);
+      });
+}
+
+function hacerCompra(fruta, cantidad){
+    const frutaEncontrada = buscarFruta(fruta);
+ 
+    if (frutaEncontrada) {
+        if (hayCantidadInventario(fruta, cantidad)) {
+            agregarFrutaCarrito(fruta, cantidad, frutaEncontrada.precio);
+            restarInventario(fruta, cantidad);
+            resumenInventario();
+            resumenParcialCarrito();
+        } else {
+            Swal.fire(
+                'Error',
+                'La cantidad execede lo que hay en el inventario',
+                'error'
+              )
+        }
+    } else {
+        Swal.fire(
+            'Error',
+            'No contamos con ese tipo de fruta',
+            'error'
+          )
+    }
+}
+
 //***************************************
 //*** i n i c i a r  l a  c o m p r a ***
 //***************************************
 
-const fruta = prompt('¿Qué fruta desea comprar?');
-const cantidad = prompt('¿Qué cantidad desea comprar comprar?');
+leerLS(carrito);
 
-const frutaEncontrada = buscarFruta(inventario, fruta);
+formulario.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    let form = e.target;
+    hacerCompra(form.children[1].value, form.children[3].value);
+})
 
-//Primer ingrfeso al carrito
-if (frutaEncontrada) {
-    if (hayCantidadInventario(inventario, fruta, cantidad)) {
-        const nuevafruta = new Fruta(fruta, frutaEncontrada.precio * cantidad);
-        cargarFrutaNueva(carrito, nuevafruta);
-        restarInventario(inventario, fruta, cantidad);
-        resumenInventario(inventario);
-    } else {
-        alert('La cantidad execede lo que hay en el inventario.');
-    }
-} else {
-    alert('No contamos con ese tipo de fruta');
-}
+btnFinalizar.addEventListener('click', ()=>{
+    resumenCarrito();
+    carrito = [];
+    localStorage.removeItem('carrito');
+})
 
-//continuar con la compra
-while (confirm('¿Desea agregar otra fruta al carrito?')) {
-    let fruta = prompt('¿qué fruta desea comprar?');
-    let cantidad = prompt('¿Qué cantidad desea comprar comprar?');
-    let frutaEncontrada = buscarFruta(inventario, fruta);
-    if (frutaEncontrada) {
-        if (hayCantidadInventario(inventario, fruta, cantidad)) {
-            cargarFruta(carrito, fruta, frutaEncontrada.precio * cantidad);
-            restarInventario(inventario, fruta, cantidad);
-            resumenInventario(inventario);
-        } else {
-            alert('La cantidad execede lo que hay en el inventario.');
-        }
-    } else {
-        alert('No contamos con ese tipo de fruta');
-    }
-}
-
-resumenCarrito();
 
 
 

@@ -7,14 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Archivo de estilos propios -->
     <link rel="stylesheet" href="./css/estilos.css">
-    <title>Carrito de compras</title>
 </head>
 
 <body>
     <main class="contenedor">
         <h1>Bienvenidos</h1>
-        <span>Carrito de compras</span>
-        <div class="card">
+        <div class="card_inventario">
             <div class="card__body">
                 <h2 class="card__titulo">Listado de Artículos por Kilo</h2>
                 <ul class="card__articulos">
@@ -28,11 +26,25 @@
                     <li>Pomelo - 500$</li>
                     <li>Melon - 200$</li>
                     <li>Sandia - 100$</li>
-                </ol>
+                </ul>
             </div>
         </div>
-        <span>Gracias por elegirnos</span>
+        <span>Carrito de compras</span>
+        <div class="card_carrito">
+            
+            <form action="">
+                <label for="lProducto">Producto</label>
+                <input type="text" id="lProducto" name="firstname">
+
+                <label for="lCantidad">Cantidad (Kilo)</label>
+                <input type="number" id="lCantidad" name="lastname">
+
+                <input type="submit" value="Agregar" id="btnAgregar">
+            </form>
+            <button id="btnFinalizar">Finalizar Compra</button>
+        </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.2/dist/sweetalert2.all.min.js"></script>
     <script src="./js/index.js"></script>
 </body>
 
