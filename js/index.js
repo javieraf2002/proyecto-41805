@@ -17,8 +17,8 @@ let carrito = [];
 
 const btnAgregar = document.querySelector("#btnAgregar");
 const btnFinalizar = document.querySelector("#btnFinalizar");
-const inputProducto=document.querySelector('#lproducto');
-const inputCantidad= document.querySelector('#lCantidad');
+const inputProducto = document.querySelector('#lproducto');
+const inputCantidad = document.querySelector('#lCantidad');
 const formulario = document.querySelector('form')
 
 //funcion constructora carrito
@@ -91,7 +91,7 @@ function resumenInventario() {
 }
 
 //resumen parcial del carrito
-function resumenParcialCarrito(){
+function resumenParcialCarrito() {
     let resumen = 'Detalle parcial del carrito de compras \n';
     carrito.forEach((fruta) => {
         resumen += `${fruta.fruta} ${fruta.precio}\n`;
@@ -109,7 +109,7 @@ function resumenCarrito() {
             'Fin de la compra',
             'Carrito vacio',
             'error'
-          )
+        )
     } else {
         //resumen de lo comprado
         let resultado = 'Detalle de la compra realizada\n';
@@ -123,7 +123,7 @@ function resumenCarrito() {
 
 const guardarLS = (fruta) => {
     let transactionArray = JSON.parse(localStorage.getItem("carrito")) || [];
-    
+
     const encontrada = transactionArray.find((f) => {
         return f.fruta === fruta.fruta;
     })
@@ -133,43 +133,54 @@ const guardarLS = (fruta) => {
     } else {
         //Nueva Fruta al carrito
         transactionArray.push(fruta);
-    }    
+    }
 
     let returnTransactionArray = JSON.stringify(transactionArray);
     localStorage.setItem("carrito", returnTransactionArray);
     console.log('Guardado LS')
 };
 
-function leerLS(arr){
+function leerLS(arr) {
     let transactionObjArr = JSON.parse(localStorage.getItem("carrito")) || [];
 
     transactionObjArr.forEach((fruta) => {
         arr.push(fruta);
-      });
+    });
 }
 
-function hacerCompra(fruta, cantidad){
+function hacerCompra(fruta, cantidad) {
     const frutaEncontrada = buscarFruta(fruta);
- 
-    if (frutaEncontrada) {
-        if (hayCantidadInventario(fruta, cantidad)) {
-            agregarFrutaCarrito(fruta, cantidad, frutaEncontrada.precio);
-            restarInventario(fruta, cantidad);
-            resumenInventario();
-            resumenParcialCarrito();
+    if (cantidad > 0) {
+        if (frutaEncontrada) {
+            if (hayCantidadInventario(fruta, cantidad)) {
+                agregarFrutaCarrito(fruta, cantidad, frutaEncontrada.precio);
+                restarInventario(fruta, cantidad);
+                resumenInventario();
+                resumenParcialCarrito();
+                return true;
+            } else {
+                Swal.fire(
+                    'Error',
+                    'La cantidad execede lo que hay en el inventario',
+                    'error'
+                )
+                return false;
+            }
         } else {
             Swal.fire(
                 'Error',
-                'La cantidad execede lo que hay en el inventario',
+                'No contamos con ese tipo de fruta',
                 'error'
-              )
+            )
+            return false;
         }
     } else {
         Swal.fire(
             'Error',
-            'No contamos con ese tipo de fruta',
+            'La cantidad es incorrecta.',
             'error'
-          )
+        )
+        return false;
     }
 }
 
@@ -179,13 +190,23 @@ function hacerCompra(fruta, cantidad){
 
 leerLS(carrito);
 
-formulario.addEventListener('submit', (e)=>{
+formulario.addEventListener('submit', (e) => {
     e.preventDefault();
     let form = e.target;
-    hacerCompra(form.children[1].value, form.children[3].value);
+    if (hacerCompra(form.children[1].value, form.children[3].value)) {
+        form.children[1].value = '';
+        form.children[3].value = '';
+        form.children[1].focus();
+        Toastify({
+            text: 'Se agregó un producto al carrito',
+            duration: 3000
+        }).showToast();
+    } else {
+        form.children[1].focus();
+    }
 })
 
-btnFinalizar.addEventListener('click', ()=>{
+btnFinalizar.addEventListener('click', () => {
     resumenCarrito();
     carrito = [];
     localStorage.removeItem('carrito');
