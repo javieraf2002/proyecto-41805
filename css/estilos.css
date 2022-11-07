@@ -1,90 +1,199 @@
-* {
-  /* background-color: beige; */
-  
+.titulo{
+    text-align: center;
 }
 
-.contenedor{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.card_inventario{
-  color: beige;  
-  width: 200px; 
-  height: 300px;
-  padding: 16px;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 5.5);
+.container__inventario{
+    width: 70%;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
 }
 
-.card__titulo{
-  color: black;
-  text-align: center;
-  font-size: 14px;
-  margin-bottom: 16px;
-  text-transform: uppercase;
+.card{
+    background-color: white;
+    width: 150px;
+    height: 200px;
+    margin: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: 0.3s;
+    border-radius: 10px;
 }
 
-.card__articulos{
-  color: black;
-  display: flex;
-  flex-direction: column;
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-li{
-  margin-bottom: 5px;
+.card__fruta{
+    margin-top: 10px;
 }
 
-span{
-  margin-top: 20px;
-  margin-bottom: 10px;
-  text-align: center;
+.card__fruta__btn{
+    background-color: blue;
+    color: white;
+    border: none;
+    height: 24px;
+    width: 120px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 3px;
 }
 
-.card_carrito{
-  max-width: 50%;
+.card__fruta__btn:active{
+     color: black;
+     background-color: white;
+     border: 2px solid blue;
 }
 
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+.card__precio{
+    margin-bottom: 10px;
 }
 
-input[type=number], select {
-  width: 30%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+.card__img{
+    width: 130px;
+    height: 100px;
 }
 
-input[type=submit] {
-  width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.container__carrito{
+    width: 30%;
+    margin: 20px;
+    background-color:white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-button {
-  width: 100%;
-  background-color: red;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+h3{
+    text-align: center;
+}
+
+.container__carrito__fruta{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 1px solid rgb(243, 239, 239);
+    display: flex;
+    justify-content: space-around;
+}
+
+.container__carrito__fruta__btn{
+    background-color: red;
+    color: white;
+    border: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.container__carrito__fruta__btn:active{
+    color: black;
+    background-color: white;
+    border: 2px solid red;
+}
+
+.container__resumen{
+    width: 40%;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-top: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container__resumen__btn__f{
+    background-color: green;
+    color: white;
+    border: none;
+    height: 32px;
+    width: 128px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container__resumen__btn__v{
+    background-color: red;
+    color: white;
+    border: none;
+    height: 32px;
+    width: 128px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container__resumen__total{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.container__resumen__total span{
+    margin-left: 20px;
+}
+
+.container__resumen__btns{
+    margin-right: 20px;
+}
+
+.container__resumen__btn__v:active{
+    color: black;
+    background-color: white;
+    border: 2px solid red;
+}
+
+.container__resumen__btn__f:active{
+    color: black;
+    background-color: white;
+    border: 2px solid green;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container__input{
+    width: 40%;
+    height: 100px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.container__input__fruta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 5px;
+}
+
+.container__input__btn{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.container__input__btn input{
+    width: 150px;
 }

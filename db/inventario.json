@@ -1,0 +1,72 @@
+[
+    {
+		"id": 0, 
+		"fruta": "banana", 
+		"precio": 150, 
+		"stock": 100, 
+		"imagen": "banana.jpg" 
+	},
+    {
+		"id": 1, 
+		"fruta": "durazno", 
+		"precio": 300, 
+		"stock": 100, 
+		"imagen": "durazno.jpg" 
+	},
+    {
+		"id": 2, 
+		"fruta": "frutilla", 
+		"precio": 600, 
+		"stock": 100, 
+		"imagen": "frutilla.jpg" 
+	},
+    {
+		"id": 3, 
+		"fruta": "mandarina", 
+		"precio": 280, 
+		"stock": 100, 
+		"imagen": "mandarina.jpg" 
+	},
+    {
+		"id": 4, 
+		"fruta": "manzana", 
+		"precio": 320, 
+		"stock": 100, 
+		"imagen": "manzana.jpg" 
+	},
+    {
+		"id": 5, 
+		"fruta": "naranja", 
+		"precio": 200, 
+		"stock": 100, 
+		"imagen": "naranja.jpg" 
+	},
+    {
+		"id": 6, 
+		"fruta": "pera", 
+		"precio": 300, 
+		"stock": 100, 
+		"imagen": "pera.jpg" 
+	},
+    {
+		"id": 7, 
+		"fruta": "pomelo", 
+		"precio": 500, 
+		"stock": 100, 
+		"imagen": "pomelo.jpg" 
+	},
+    {
+		"id": 8, 
+		"fruta": "melon", 
+		"precio": 200, 
+		"stock": 100, 
+		"imagen": "melon.jpg" 
+	},
+    {
+		"id": 9, 
+		"fruta": "sandia", 
+		"precio": 100, 
+		"stock": 100, 
+		"imagen": "sandia.jpg" 
+	}
+]

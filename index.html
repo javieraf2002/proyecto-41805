@@ -1,54 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Archivo de estilos propios -->
+    <title>Mercado de Frutos</title>
+    <link rel="shortcut icon" href="./imagenes/favicon.png" type="image/x-icon" />
+    <!-- Estilos propios -->
     <link rel="stylesheet" href="./css/estilos.css">
+    <!-- Libreria toastify -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
-    <main class="contenedor">
-        <h1>Bienvenidos</h1>
-        <div class="card_inventario">
-            <div class="card__body">
-                <h2 class="card__titulo">Listado de Artículos por Kilo</h2>
-                <ul class="card__articulos">
-                    <li>Banana - 150$</li>
-                    <li>Durazno - 300$</li>
-                    <li>Frutilla - 600$</li>
-                    <li>Mandarina - 280$</li>
-                    <li>Manzana - 320$</li>
-                    <li>Naranja - 200$</li>
-                    <li>Pera - 300$</li>
-                    <li>Pomelo - 500$</li>
-                    <li>Melon - 200$</li>
-                    <li>Sandia - 100$</li>
-                </ul>
+    <h1 class="titulo">🍉 Mercado de Frutos 🍓</h1>
+    <div class="main">
+        <section class="container__inventario">
+            <!-- Secarga desde js -->
+        </section>
+        <section class="container__carrito">
+            <!-- se carga desde js -->
+        </section>
+    </div>
+    <div>
+        <section class="footer">
+            <div class="container__input">
+                <form class="container__input__fruta">
+                    <label for="lProducto">Producto</label>
+                    <input type="text" id="lProducto" name="firstname">
+    
+                    <label for="lCantidad">Cantidad (Kilo)</label>
+                    <input type="number" id="lCantidad" name="lastname">
+    
+                    <div class="container__input__btn">
+                        <h3>Agregar por Kilos</h3>
+                        <input class="card__fruta__btn" type="submit" value="Agregar al Carrito" id="btnAgregar">
+                    </div>
+                </form>
             </div>
-        </div>
-        <span>Carrito de compras</span>
-        <div class="card_carrito">
-            
-            <form action="">
-                <label for="lProducto">Producto</label>
-                <input type="text" id="lProducto" name="firstname">
+            <div class="container__resumen">
+                <h3>Resumen del Carrito</h3>
+                <div class="container__resumen__total">
+                    <span id="totalpagar">Total $</span>
+                    <div class="container__resumen__btns">
+                        <button class="container__resumen__btn__v" id="btnVaciar">Vaciar carrito</button>
+                        <button class="container__resumen__btn__f" id="btnFinalizar">Finalizar compra</button>
+                    </div>
+                </div>
+            </div>
 
-                <label for="lCantidad">Cantidad (Kilo)</label>
-                <input type="number" id="lCantidad" name="lastname">
-
-                <input type="submit" value="Agregar al Carrito" id="btnAgregar">
-            </form>
-            <button id="btnFinalizar">Finalizar Compra</button>
-        </div>
-    </main>
+        </section>
+    </div>
+    <!-- Libreria sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Libreria toastify -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <!-- Libreria Sweetalert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Funciones del inventariode frutas -->
+    <script src="./js/inventario.js"></script>
+    <!-- Funciones para el carrito -->
+    <script src="./js/carrito.js"></script>
+    <!-- Funciones del Local Storage -->
+    <script src="./js/localstorage.js"></script>
     <!-- Programa principal -->
     <script src="./js/index.js"></script>
 </body>
